@@ -48,6 +48,50 @@ namespace Console
 
         }
 
+        /// <summary>
+        /// Find the contiguous subarray within an array (containing at least one number) which has the largest sum. 
+        /// For example, given the array[-2, 1, -3, 4, -1, 2, 1, -5, 4],
+        /// the contiguous subarray[4, -1, 2, 1] has the largest sum = 6.
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int MaxSubArray(int[] nums)
+        {
+            int nextMax = 0;
+            int previousMax = 0;
+            int largestNumber = int.MinValue;
+
+            // if all the numbers are negative then the algorithm doesn't work
+            // we need to find the max value and return that.
+            for(int i=0; i < nums.Length;i++)
+            {
+                if(nums[i] > largestNumber)
+                {
+                    largestNumber = nums[i];
+                }
+            }
+
+            if (largestNumber <0)
+            {
+                return largestNumber;
+            }
+
+            // Since we have at least one positive number then this algorigthm will work
+            for (int i=0; i < nums.Length;i++)
+            {
+                nextMax = nextMax+ nums[i];
+
+                if(nextMax < 0 )
+                {
+                    nextMax = 0;
+                }
+                if (previousMax < nextMax)
+                    previousMax = nextMax;
+
+            }
+            return previousMax;
+        }
+
         public int BinarySearch(int[] numbers, int value ,int rangeMin, int rangeMax)
 
         {
