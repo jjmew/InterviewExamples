@@ -141,6 +141,67 @@ namespace Console
         }
 
         /// <summary>
+        /// Rotate an array of n elements to the right by k steps.
+        /// For example, with n = 7 and k = 3, the array[1, 2, 3, 4, 5, 6, 7] is rotated to[5, 6, 7, 1, 2, 3, 4]. 
+        /// </summary>
+        /// <param name="nums">The array to be rotated.</param>
+        /// <param name="k">Numbers of postions to be rotated.</param>
+        /// <remarks></remarks>
+        public void RotateArray(int[] nums, int k)
+        {
+            if (nums == null)
+            {
+                throw new ArgumentNullException("The argument nums can't be null");
+            }
+
+            int limit = k % nums.Length;
+            int[] temp = new int[limit];
+
+            Array.Copy(nums, nums.Length - limit, temp, 0, limit);
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int pos = (nums.Length - 1 - i);
+                if (pos < limit)
+                {
+                    nums[pos] = temp[pos];
+                }
+                else
+                {
+                    nums[pos] = nums[pos - limit];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Given an array of integers, every element appears twice except for one. Find that single one.
+        /// </summary>
+        /// <param name="nums">The array to be searched.</param>
+        /// <returns>The number that only appears once.</returns>
+        /// <remarks>
+        /// This is a tricky one. The first instinct will be to compare each element to the whole arrary and see if it exist. This approach
+        /// would work but it will be a o( n^2) solution. You could achieve a O(1) solution with hash tables. If this question ever gets asked
+        /// during an interview then it is likely that the interviewer just wants to know if you are familiar with binary operators. Hence we 
+        /// will solve this one by xor-ing all the elements. Keep in mind that at the end of the day an integer is just a collections of bits.
+        /// At the end of the whole operation each bit that was set twice will become 0. The only bit set to 1 will be the bits that were only
+        /// set once.
+        /// </remarks>
+        public int SingleNumber(int[] nums)
+        {
+            if (nums == null)
+            {
+                throw new ArgumentNullException("The argument nums can't be null");
+            }
+
+            int result = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                result = result ^ nums[i];
+            }
+            return result;
+        }
+
+        /// <summary>
         /// This is simple implementation of a binary search on. 
         /// </summary>
         /// <param name="numbers">The array to be searched.</param>
